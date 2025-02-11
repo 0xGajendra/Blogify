@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Blog</title>
+</head>
+<body>
+    <%- include("./partials/navbar") %>
+    <div>
+        <div class="card center mx-auto mt-5" style="width: 80rem;">
+            <h1 class="mx-auto mt-5"><b><%= blog.title %></b></h1>
+            <img src="<%= blog.coverImage %>" class="card-img-top mt-5 mx-auto" alt="..." style="width: 10rem;">
+            <div class="card-body mt-5 mx-auto">
+              <pre class="card-text overflow-x-auto"><%= blog.body %></pre>
+            </div>
+          </div>
+    </div>
+    
+    <%- include('./partials/script') %>
+</body>
+</html>
