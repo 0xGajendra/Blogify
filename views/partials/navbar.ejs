@@ -9,7 +9,8 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
-          <li class="nav-item">
+          <% if (locals.user) { %>
+            <li class="nav-item"></li>
             <a class="nav-link" href="#">Create Blog</a>
           </li>
           <li class="nav-item dropdown">
@@ -17,10 +18,27 @@
               Gajendra 
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Log Out</a></li>
+              <li><a class="dropdown-item" href="/user/logout">Log Out</a></li>
             </ul>
           </li>
+          <% } else 
+          { %>
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/user/signin">Sign In</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/user/signup">Create Account</a>
+          </li>
+            <%}
+            %>
         </ul>
       </div>
     </div>
   </nav>
+  <% if (locals.error) { %>
+  <div>
+    <div class="alert alert-danger" role="alert">
+      Invalid Username or Password
+    </div>
+  </div>
+  <% } %>

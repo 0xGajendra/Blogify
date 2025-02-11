@@ -1,5 +1,6 @@
 const {Router} = require('express')
-const User = require('../models/user')
+const User = require('../models/user');
+const { createTokenForUser } = require('../services/authentication');
 const router =  Router();
 
 router.get('/signin',(req,res)=>{
@@ -12,10 +13,15 @@ router.get('/signup',(req,res)=>{
 
 router.post('/signin', async(req,res)=>{
     const{email, password} = req.body;
-    User.matchPassword(email, password);
-    console.log("login successful")
-    return res.redirect("/");
-
+    try{
+       const token = await User.matchPasswordAndGenerateToken(email, password);
+        console.log("login successful",token);
+        return res.cookie("token",token).redirect('/');
+    }catch(error){
+        return res.render('signin',{
+            error : "Incorrect Email or Password"
+        })
+    }
 })
 
 router.post('/signup', async(req,res)=>{
@@ -27,5 +33,9 @@ router.post('/signup', async(req,res)=>{
     });
     return res.redirect("/");
 });
+
+router.get('/logout',(req,res)=>{
+    return res.clearCookie('token').redirect("/")
+})
 
 module.exports = router;

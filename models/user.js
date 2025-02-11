@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const { Schema, model } = require("mongoose");
+const { createTokenForUser } = require("../services/authentication");
 const saltRounds = 10;
 const userSchema = new Schema(
   {
@@ -48,19 +49,29 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.static("matchPassword",async function(email, matchPassword){
+// Adding a static method "matchPassword" to the User schema
+// This function checks if the provided password matches the stored hashed password
+userSchema.static("matchPasswordAndGenerateToken",async function(email, matchPassword){
+  // Find the user by email in the database
     const user = await this.findOne({email})
+    console.log(user);
+    
+    // If no user is found, throw an error
     if(!user) throw new console.error('User not found!!');
     ;
-
+    // Retrieve the stored hashed password and salt
     const salt = user.salt;
     const hashedPassword = user.password;
     
-    // Compare the provided password with the stored hash
+    // Compare the provided password with the stored hashed password using bcrypt
     const isMatch = await bcrypt.compare(matchPassword, user.password);
+
+    // If passwords don't match, throw an error
     if (!isMatch) throw new Error("Incorrect Password");
-        
-    return {...user, password: undefined, salt: undefined}
+    
+    // Return user data but remove password and salt for security reasons 
+    // Spread oprator is used to update the user(object) by makeing the password and salt undefined
+    return token = createTokenForUser(user)
 
 })
 const User = model("user", userSchema);
