@@ -6,13 +6,14 @@
 </head>
 <body>
     <%- include("./partials/navbar") %>
-   
+   <div class="row row-cols-4">
     <% blogs.forEach(blog => { %>
-        <div class="card mt-3 ms-3" style="width: 18rem;">
+      <div class="col">
+        <div class="card " style="width: 18rem;">
             <img src="<%= blog.coverImage %>" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title"><b><%= blog.title %></b></h5>
-              <p class="card-text"><%= blog.body.slice(0,80) %>
+              <p class="card-text text-body-tertiary"><%= blog.body.slice(0,80) %>
                 <% if (blog.body.length > 80) { %>
                  . . . 
                 <% } %>
@@ -20,7 +21,9 @@
               <a href="/blog/<%= blog._id %>" class="btn btn-primary">Read Full Blog </a>
             </div>
           </div>
+        </div>
     <% }) %>
+    </div>
     <%- include('./partials/script') %>
 </body>
 </html>

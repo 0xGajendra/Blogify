@@ -11,9 +11,29 @@
             <h1 class="mx-auto mt-5"><b><%= blog.title %></b></h1>
             <img src="<%= blog.coverImage %>" class="card-img-top mt-5 mx-auto" alt="..." style="width: 10rem;">
             <div class="card-body mt-5 mx-auto">
-              <pre class="card-text overflow-x-auto"><%= blog.body %></pre>
+              <pre class="card-text overflow-x-auto"><%= blog.body %></pre> 
+              <!-- pre tag will help us maintain the spacing -->
+               <div>
+                <img src="<%= blog.createdBy.profileImage %>" width="48px"> <%= blog.createdBy.fullName %>
+               </div>
             </div>
           </div>
+    </div>
+    <div class="container mt-3">
+      <h1>Comments</h1>
+      <div class="container mt-5">
+        <form method="POST" action="/comment/<%= blog._id %>">
+          <div class="mb-3">
+
+            <input
+              type="text"
+              class="form-control"
+              name="content"
+              placeholder="write your comment here"
+            />
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
     </div>
     
     <%- include('./partials/script') %>
