@@ -34,12 +34,16 @@ router.get('/:id', async (req,res)=>{
   // Search for Populate in mongoose in gfg
   // The populate() method in Mongoose is used to automatically replace a field in a document with the actual data from a related document.
   const blog = await Blog.findById(req.params.id).populate("createdBy");
-  console.log(blog.createdBy.profileImage)
-  console.log(blog.coverImage)
+  const comment = await Comment.find({}).populate("createdBy");
+  // console.log(comment);
+  // console.log(blog.createdBy.profileImage)
+  // console.log(blog.coverImage)
+  console.log(comment[0].createdBy.fullName);
   router.use(express.static(path.resolve("./public")))
   return res.render('blog',{
     user: req.user,
     blog,
+    comment,
   })
 })
 
@@ -47,7 +51,7 @@ router.get('/:id', async (req,res)=>{
 
 router.post('/comment/:blogId',async (req,res)=>{
   const comment = await Comment.create({
-    content : res.body.content,
+    content : req.body.content,
     blogId : req.params.blogId,
     createdBy: req.user._id,
   });

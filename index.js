@@ -27,7 +27,7 @@ app.get('/', async (req, res) => {
     });
     res.render('home',{
         user: req.user,
-        blogs: allBlogs //bydefault we are sending user with request(which will be null initially)
+        blogs: allBlogs, //bydefault we are sending user with request(which will be null initially)
     });
 });
 

@@ -19,20 +19,40 @@
             </div>
           </div>
     </div>
-    <div class="container mt-3">
-      <h1>Comments</h1>
-      <div class="container mt-5">
-        <form method="POST" action="/comment/<%= blog._id %>">
-          <div class="mb-3">
 
-            <input
-              type="text"
-              class="form-control"
-              name="content"
-              placeholder="write your comment here"
-            />
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+    <% if (locals.user) { %>
+     
+      <div class="container mt-3">
+        <h1>Comments</h1>
+        <div class="container mt-5">
+          <form method="POST" action="/blog/comment/<%= blog._id %>">
+            <%= blog._id %>
+            <div class="mb-3">
+  
+              <input
+                type="text"
+                class="form-control"
+                name="content"
+                placeholder="write your comment here"
+              />
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    <% } %>
+    <div class="card mb-3">
+      <div class="card-header mb-3">
+        Comments
+      </div>
+      <div class="card-body mb-3">
+        <% for( let cmt = 0; cmt < cmt.length; cmt++ ) { %>
+          div class="card-body">
+            <blockquote class="blockquote mb-0">
+              <p><%= locals.comment[cmt].createdBy.fullName %></p>
+              <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+            </blockquote>
+          </div>
+        <% } %>
       </div>
     </div>
     
