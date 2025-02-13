@@ -42,18 +42,20 @@
     <% } %>
     <div class="card mb-3">
       <div class="card-header mb-3">
-        Comments
+        Comments ( <%= comments.length %> )
       </div>
-      <div class="card-body mb-3">
-        <% for( let cmt = 0; cmt < cmt.length; cmt++ ) { %>
-          div class="card-body">
+      <% comments.forEach(comment => { %>
+        <div class="card-body d-flex ">
+          <div class="card-body">
             <blockquote class="blockquote mb-0">
-              <p><%= locals.comment[cmt].createdBy.fullName %></p>
-              <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-            </blockquote>
-          </div>
-        <% } %>
-      </div>
+              <p> <%= comment.content %> </p>
+              <div class="blockquote-footer"> <%= comment.createdBy.fullName %> </div>
+              <img src="<%= comment.createdBy.profileImage %>" width="24px">
+              </blockquote>
+            </div>
+            <br>
+        </div>
+            <% }) %>
     </div>
     
     <%- include('./partials/script') %>

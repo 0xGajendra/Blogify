@@ -1,6 +1,7 @@
+require('dotenv').config()
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const ejs = require('ejs');
 const cookieParser = require('cookie-parser')
 const path = require('path');
@@ -17,7 +18,7 @@ app.use(express.urlencoded({extended : false}));
 app.use(cookieParser());
 app.use(checkForAuthenticationCookie("token"));
 app.use(express.static(path.resolve("./public"))) // Serves static files (HTML, CSS, JS, images) from the "public" folder 
-mongoose.connect("mongodb://127.0.0.1:27017/Blogify")
+mongoose.connect(process.env.MONGO_URL)
 
 app.get('/', async (req, res) => {
     const allBlogs = await Blog.find({});
